@@ -1,3 +1,4 @@
+from os.path import exists
 from random import randint
 from time import time
 from tkinter import Button, Canvas, Frame, Label, TclError, Tk, Toplevel, messagebox, simpledialog
@@ -328,8 +329,7 @@ class Tetris:
     def palaute(self):
         tulos = simpledialog.askstring("Palaute", "Anna palautetta")
         if tulos:
-            from Pisteet import POLKU
-            with open(POLKU + "palaute.txt", "a", encoding="utf-8") as tied:
+            with open("palaute.txt", "a", encoding="utf-8") as tied:
                 tied.write(tulos + "\n")
             messagebox.showinfo("Palaute", "Kiitos palautteestasi")
 
@@ -339,9 +339,10 @@ class Tetris:
 
         Label(ikkuna, text="Palautteet", font=("Arial", 25, "bold")).pack()
 
-        with open("palaute.txt", encoding="utf-8") as tied:
-            for rivi in tied:
-                Label(ikkuna, text=rivi).pack()
+        if exists("palaute.txt"):
+            with open("palaute.txt", encoding="utf-8") as tied:
+                for rivi in tied:
+                    Label(ikkuna, text=rivi).pack()
 
     def napit(self):
         ikkuna = Toplevel(self.ikkuna)

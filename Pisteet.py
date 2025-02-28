@@ -1,3 +1,5 @@
+from os.path import exists
+
 class Pisteet:
     def __init__(self, tiedosto: str) -> None:
         self.tiedosto = tiedosto
@@ -5,10 +7,11 @@ class Pisteet:
 
     def lue(self):
         self.pisteet.clear()
-        with open(self.tiedosto) as tied:
-            for rivi in tied:
-                osat = rivi.strip().split(";")
-                self.pisteet.append([osat[0], int(osat[1])])
+        if exists(self.tiedosto):
+            with open(self.tiedosto) as tied:
+                for rivi in tied:
+                    osat = rivi.strip().split(";")
+                    self.pisteet.append([osat[0], int(osat[1])])
 
     def lisaa(self, nimi: str, pisteet: int):
         nimet = list(map(lambda p: p[0], self.pisteet))
